@@ -10,7 +10,7 @@ following CSS selectors:
 * `button`
 * `input`
 
-## Containers
+## Containers
 Focusables can be wrapped in containers. Containers can keep track of the last
 active focusable item within them using a `data-focus` attribute.
 
