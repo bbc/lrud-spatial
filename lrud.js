@@ -56,22 +56,26 @@ const getParentContainer = (elem) => {
 }
 
 /**
- * Get the unweighted midpoint of a given edge
+ * Get the points for a given edge
  *
  * @param {Rect} rect An object representing the rectangle
  * @param {string} dir The direction of the edge (left, right, up, down)
- * @return {Point} An object containing the X and Y coordinates of the point
+ * @return {Point[]} An array containing a pair of objects with X and Y coordinates
  */
-const getPointForEdge = (rect, dir) => {
+const getPointsForEdge = (rect, dir) => {
   switch (dir) {
     case 'left':
-      return { x: Math.floor(rect.left), y: Math.floor((rect.top + rect.bottom) / 2) };
+      return [ { x: Math.floor(rect.left), y: Math.floor(rect.top) },
+        { x: Math.floor(rect.left), y: Math.floor(rect.bottom) } ];
     case 'right':
-      return { x: Math.floor(rect.right), y: Math.floor((rect.top + rect.bottom) / 2) };
+      return [ { x: Math.floor(rect.right), y: Math.floor(rect.top) },
+        { x: Math.floor(rect.right), y: Math.floor(rect.bottom) } ];
     case 'up':
-      return { x: Math.floor((rect.left + rect.right) / 2), y: Math.floor(rect.top) };
+      return [ { x: Math.floor(rect.left), y: Math.floor(rect.top) },
+        { x: Math.floor(rect.right), y: Math.floor(rect.top) } ];
     case 'down':
-      return { x: Math.floor((rect.left + rect.right) / 2), y: Math.floor(rect.bottom) };
+      return [ { x: Math.floor(rect.left), y: Math.floor(rect.bottom) },
+        { x: Math.floor(rect.right), y: Math.floor(rect.bottom) } ];
   }
 }
 
@@ -112,17 +116,13 @@ const isRight = (a, b) => a.x > b.x;
  * @return {Element} The element that should receive focus next
  */
 const getNextFocus = (elem, exitDir) => {
-  const lastFocus = elem.getAttribute('data-focus');
-  if (lastFocus) { return document.querySelector(lastFocus); } //TODO: What if the data attrib is out-of-date?
-
-  const focusRect = elem.getBoundingClientRect();
-  const exitPoint = getPointForEdge(focusRect, exitDir);
+  const exitRect = elem.getBoundingClientRect();
+  const [ exitPointA, exitPointB ] = getPointsForEdge(exitRect, exitDir);
   const entryDir = (exitDir === 'left' && 'right') ||
         (exitDir === 'right' && 'left') ||
         (exitDir === 'up' && 'down') ||
         (exitDir === 'down' && 'up');
 
-  // !! Containers can only focus other containers
   // Get parent focus container
   const container = getParentContainer(elem);
 
@@ -133,18 +133,20 @@ const getNextFocus = (elem, exitDir) => {
  
   for (let i = 0; i < focusableCandidates.length; ++i) {
     const candidate = focusableCandidates[i];
-    const rect = candidate.getBoundingClientRect();
-    const entryPoint = getPointForEdge(rect, entryDir);
+    const entryRect = candidate.getBoundingClientRect();
+    const [ entryPointA, entryPointB ] = getPointsForEdge(entryRect, entryDir);
 
     // Bail if the candidate is in the opposite direction
     if (
-      exitDir === 'left' && isRight(entryPoint, exitPoint) ||
-      exitDir === 'right' && isRight(exitPoint, entryPoint) ||
-      exitDir === 'up' && isBelow(entryPoint, exitPoint) ||
-      exitDir === 'down' && isBelow(exitPoint, entryPoint)
+      exitDir === 'left' && isRight(entryPointA, exitPointA) ||
+      exitDir === 'right' && isRight(exitPointA, entryPointA) ||
+      exitDir === 'up' && isBelow(entryPointA, exitPointA) ||
+      exitDir === 'down' && isBelow(exitPointA, entryPointA)
     ) { continue; }
    
-    const distance = getDistanceBetweenPoints(exitPoint, entryPoint);
+    const distance = Math.min(
+      getDistanceBetweenPoints(exitPointA, entryPointA),
+      getDistanceBetweenPoints(exitPointB, entryPointB));
 
     if (bestDistance > distance) {
       bestDistance = distance;
@@ -153,33 +155,18 @@ const getNextFocus = (elem, exitDir) => {
   }
 
   if (bestCandidate) {
-    const candidateParent = getParentContainer(bestCandidate);
+    const candidateContainer = getParentContainer(bestCandidate);
 
-    if (candidateParent !== container) {
-      // Container changed, foucs first item (or last active child)
-      const lastActiveChild = candidateParent.getAttribute('data-focus');
+    if (candidateContainer !== container) {
+      if (elem.id) container.setAttribute('data-focus', elem.id);
 
-      return lastActiveChild ? candidateParent.querySelector(lastActiveChild) : candidateParent.querySelector(focusableSelector);
+      const lastActiveChild = candidateContainer.getAttribute('data-focus');
+
+      return lastActiveChild ? document.getElementById(lastActiveChild) : candidateContainer.querySelector(focusableSelector);
     }
   }
 
   return bestCandidate;
-}
-
-/**
- * Assign focus to candidate
- *
- * @param {string} CSS selector of element that should receive focus
- */
-const assignFocus = (selector) => {
-  const nextFocus = document.querySelector(selector);
-
-  // Check if there is a container
-  if (container) {
-    container.setAttribute('data-focus', nextFocus);
-  }
-
-  nextFocus.focus();
 }
 
 const _left = 'left', _right = 'right', _up = 'up', _down = 'down';
