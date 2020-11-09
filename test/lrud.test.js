@@ -300,6 +300,19 @@ describe('LRUD spatial', () => {
 
       expect(result).toEqual('item-1');
     });
+
+    it('should remain focussed on candidate 2 when right, right is pressed', async () => {
+      await page.goto(`file://${__dirname}/layouts/0c-4f-hidden.html`);
+      await page.waitForSelector('.loaded');
+      await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('ArrowRight');
+
+      const result = await page.evaluate(() => {
+        return document.activeElement.id
+      });
+
+      expect(result).toEqual('item-2');
+    });
   });
 
 

@@ -2,12 +2,12 @@
   "name": "lrud-spatial",
   "version": "1.0.0",
   "description": "Spatial navigation library",
-  "main": "lrud.js",
+  "main": "lib/lrud.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
-    "build": "babel ./lrud.js | uglifyjs -c -m -o ./lrud.min.js",
+    "build": "babel ./lib/lrud.js | uglifyjs -c -m -o ./lrud.min.js",
     "test": "jest"
   },
   "repository": {
