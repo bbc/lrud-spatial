@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "babel ./lrud.js | uglifyjs -c -m -o ./lrud.min.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,8 @@
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
+    "jest": "^26.6.3",
+    "puppeteer": "^5.4.1",
     "uglify-js": "^3.11.5"
   }
 }
