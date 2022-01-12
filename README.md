@@ -19,7 +19,7 @@ active focusable item within them using a `data-focus` attribute.
 When a container has no previous focus state, it's first focusable element is
 used instead.
 
-At this time, containers are defined as matching the CSS selector: `section`.
+At this time, containers are defined as matching the CSS selectors: `section` and `.spatial-container`.
 
 ## How does it work?
 To determine the next element that should be focused;
