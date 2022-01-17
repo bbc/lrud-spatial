@@ -454,4 +454,48 @@ describe('LRUD spatial', () => {
       expect(result).toEqual('item-1');
     });
   });
+
+  describe('Page with two containers with blocked exit directions', () => {
+    it('should prevent focus moving to candidate 3 when down is pressed', async () => {
+      await page.goto(`${testPath}/3c-h-6f-blocked-exit.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('ArrowDown');
+
+      const result = await page.evaluate(() => {
+        return document.activeElement.id
+      });
+
+      expect(result).toEqual('item-2');
+    })
+
+    it('should prevent focus moving to candidate 2 when up is pressed', async () => {
+      await page.goto(`${testPath}/3c-h-6f-blocked-exit.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('ArrowUp');
+
+      const result = await page.evaluate(() => {
+        return document.activeElement.id
+      });
+
+      expect(result).toEqual('item-3');
+    })
+
+    it('should allow container exit for non blocked directions', async () => {
+      await page.goto(`${testPath}/3c-h-6f-blocked-exit.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('ArrowDown');
+
+      const result = await page.evaluate(() => {
+        return document.activeElement.id
+      });
+
+      expect(result).toEqual('item-5');
+    })
+
+  })
 });
