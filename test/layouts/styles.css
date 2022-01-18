@@ -9,7 +9,7 @@ body {
     background-color: aliceblue;
 }
 
-section {
+section, .lrud-container {
     width:500px;
     overflow:hidden;
     margin-bottom:25px;
@@ -38,9 +38,15 @@ a:focus {
     background-color: #8caabe;
 }
 
-section.panel {
+section.panel, div.panel {
     display: inline-block;
-    margin-right:30px;
+    margin-right: 30px;
+    vertical-align: top;
+}
+
+.vert-offset {
+    display: block;
+    margin-top: 200px;
 }
 
 .hidden {

@@ -7,7 +7,6 @@
     "doc": "docs"
   },
   "scripts": {
-    "build": "babel ./lib/lrud.js | uglifyjs -c -m -o ./lrud.min.js",
     "test": "jest"
   },
   "repository": {

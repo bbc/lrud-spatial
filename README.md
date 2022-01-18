@@ -19,7 +19,21 @@ active focusable item within them using a `data-focus` attribute.
 When a container has no previous focus state, it's first focusable element is
 used instead.
 
-At this time, containers are defined as matching the CSS selector: `section`.
+At this time, containers are defined as matching the CSS selectors: `section` or 
+`.lrud-container`.
+
+### Block exits
+In some instances, it is desirable to prevent lrud-spatial from selecting another 
+"best candidate" for example at the bottom of a list. To do this, a container element 
+should add an additional `data-block-exit` attribute to prevent further selection in 
+that direction. This should be a space separated list.
+
+E.g. 
+```html
+<div class="lrud-container" data-block-exit="up down">
+   ...
+</div>
+```
 
 ## How does it work?
 To determine the next element that should be focused;
