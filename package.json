@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "jest",
-    "postinstall": "babel lib --out-file lib/lrud.min.js"
+    "build": "rm lib/lrud.min.js && babel lib --out-file lib/lrud.min.js",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
