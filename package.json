@@ -29,8 +29,6 @@
   "dependencies": {
     "@babel/cli": "^7.16.8",
     "@babel/core": "^7.16.12",
-    "@babel/plugin-transform-arrow-functions": "^7.16.7",
-    "@babel/plugin-transform-block-scoped-functions": "^7.12.1",
     "@babel/preset-env": "^7.12.1"
   }
 }
