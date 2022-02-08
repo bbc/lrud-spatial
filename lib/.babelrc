@@ -1,5 +1,11 @@
 {
-  "presets": [ "@babel/preset-env" ],
+  "presets": [
+    ["@babel/preset-env"]
+  ],
+  "plugins": [
+    ["@babel/plugin-transform-destructuring", { "loose": true }],
+    ["@babel/plugin-transform-modules-commonjs", { "loose": true }]
+  ],
   "minified": true,
   "comments": false
 }
