@@ -19,8 +19,7 @@ active focusable item within them using a `data-focus` attribute.
 When a container has no previous focus state, it's first focusable element is
 used instead.
 
-At this time, containers are defined as matching the CSS selectors: `section` or 
-`.lrud-container`.
+At this time, containers are defined as matching the CSS selectors: `nav`, `section` or `.lrud-container`.
 
 ### Block exits
 In some instances, it is desirable to prevent lrud-spatial from selecting another 
