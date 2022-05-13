@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-let server = require('./server')
+const server = require('./server')
 
 const testPath = `${server.address}/test/layouts`
 
