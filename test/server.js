@@ -9,15 +9,24 @@ const address = `http://localhost:${port}/`
 
 let server = http.createServer((req, res) => {
   try {
-    const data = fs.readFileSync(path.join(__dirname, '..', req.url));
-    if (req.url.endsWith('.js')) res.setHeader('Content-Type', 'application/javascript');
-    res.writeHead(200);
-    if(req.url.endsWith('.html')) {
-      const template = fs.readFileSync(path.join(__dirname, './template.html'), 'utf-8')
-      res.end(template.replace('%%body-content%%', data))
+    let data
+    if(req.url === '/') {
+      const layoutDirectory = './test/layouts'
+      const layouts = fs.readdirSync(path.join(__dirname, '..', layoutDirectory))
+      data = `<ul>${layouts.filter(l => l.endsWith('.html')).map(l => `<li><a href="${layoutDirectory}/${l}">${l}</a></li>`).join('')}</ul>`
     } else {
-      res.end(data);
+      data = fs.readFileSync(path.join(__dirname, '..', req.url));
     }
+
+    if (req.url.endsWith('.js')) res.setHeader('Content-Type', 'application/javascript');
+
+    if(req.url.endsWith('.html') || req.url === '/') {
+      const template = fs.readFileSync(path.join(__dirname, './template.html'), 'utf-8')
+      data = template.replace('%%body-content%%', data)
+    }
+
+    res.writeHead(200);
+    res.end(data);
   } catch (error) {
     res.writeHead(404);
     res.end(JSON.stringify(error));
