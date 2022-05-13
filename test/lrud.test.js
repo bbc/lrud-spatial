@@ -1,37 +1,16 @@
-const path = require('path')
 const puppeteer = require('puppeteer');
-const util = require('util')
+let server = require('./server')
 
-const fs = require('fs');
-const http = require('http');
-
-let server
-
-server = http.createServer((req, res) => {
-  try {
-    const data = fs.readFileSync(path.join(__dirname, '..', req.url));
-    if (req.url.endsWith('.js')) res.setHeader('Content-Type', 'application/javascript');
-    res.writeHead(200);
-    res.end(data);
-  } catch (error) {
-    res.writeHead(404);
-    res.end(JSON.stringify(error));  
-  }
-});
-
-const listen = util.promisify(server.listen.bind(server))
-const close = util.promisify(server.close.bind(server))
-
-const testPath = 'http://localhost:3005/test/layouts'
+const testPath = `${server.address}/test/layouts`
 
 describe('LRUD spatial', () => {
   let browser;
   let page;
   let context;
-  
+
   beforeAll(async () => {
-    await listen(3005);
-    browser = await puppeteer.launch({ 
+    await server.listen();
+    browser = await puppeteer.launch({
       defaultViewport: {width: 1280, height: 800}
     });
     context = await browser.createIncognitoBrowserContext();
@@ -48,14 +27,14 @@ describe('LRUD spatial', () => {
   afterAll(async () => {
     await context.close();
     await browser.close();
-    await close();
+    await server.close();
   });
 
   describe('Initialising', () => {
     it('should focus on the first candidate by default', async () => {
       await page.goto(`${testPath}/1c-4f.html`);
       await page.waitForFunction('document.activeElement');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -69,19 +48,19 @@ describe('LRUD spatial', () => {
       await page.goto(`${testPath}/1c-4f.html`);
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowRight');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
 
       expect(result).toEqual('item-2');
     });
-    
+
     it('should focus on the third item on a down arrow press', async () => {
       await page.goto(`${testPath}/1c-4f.html`);
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowDown');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -94,7 +73,7 @@ describe('LRUD spatial', () => {
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowDown');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -109,7 +88,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowLeft');
       await page.keyboard.press('ArrowUp');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -121,7 +100,7 @@ describe('LRUD spatial', () => {
       await page.goto(`${testPath}/1c-4f.html`);
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowLeft');
-            
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -134,7 +113,7 @@ describe('LRUD spatial', () => {
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowRight');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -148,7 +127,7 @@ describe('LRUD spatial', () => {
       await page.goto(`${testPath}/2c-v-4f.html`);
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowDown');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -161,7 +140,7 @@ describe('LRUD spatial', () => {
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowUp');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -175,7 +154,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowUp');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -190,7 +169,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowLeft');
       await page.keyboard.press('ArrowUp');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -202,7 +181,7 @@ describe('LRUD spatial', () => {
       await page.goto(`${testPath}/2c-v-4f.html`);
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowLeft');
-            
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -215,7 +194,7 @@ describe('LRUD spatial', () => {
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowRight');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -230,7 +209,7 @@ describe('LRUD spatial', () => {
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowUp');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.classList
       });
@@ -244,7 +223,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowUp');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.classList
       });
@@ -259,7 +238,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowLeft');
       await page.keyboard.press('ArrowUp');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.classList
       });
@@ -273,7 +252,7 @@ describe('LRUD spatial', () => {
       await page.goto(`${testPath}/2c-h-4f.html`);
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowDown');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -286,7 +265,7 @@ describe('LRUD spatial', () => {
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowRight');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -300,7 +279,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowLeft');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -321,7 +300,7 @@ describe('LRUD spatial', () => {
       await page.goto(`${testPath}/0c-4f-hidden.html`);
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowLeft');
-  
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -412,7 +391,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowDown');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -429,7 +408,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowUp');
-      
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
@@ -446,7 +425,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowUp');
 
-            
+
       const result = await page.evaluate(() => {
         return document.activeElement.id
       });
