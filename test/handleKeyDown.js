@@ -13,5 +13,7 @@ const handleKeyDown = (event) => {
   }
 }
 
+window.addEventListener('click', (e) => e.preventDefault())
+
 window.addEventListener('keydown', handleKeyDown);
 getNextFocus().focus();

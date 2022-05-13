@@ -10,10 +10,15 @@ body {
 }
 
 section, .lrud-container {
-    width:500px;
+    width: fit-content;
     overflow:hidden;
     margin-bottom:25px;
     background-color: #5b7084;
+}
+
+section > section, .lrud-container > .lrud-container {
+    background-color: #879db2;
+    margin: 10px;
 }
 
 a {
@@ -25,8 +30,8 @@ a {
     margin:20px;
 }
 
-a:focus { 
-    border:1px solid #F00; 
+a:focus {
+    border:1px solid #F00;
 }
 
 .item {
@@ -77,4 +82,17 @@ section.wide {
     height:50px;
     display:block;
     margin-top:-10px;
+}
+
+[data-block-exit*="left"] {
+    border-left: 8px dashed black;
+}
+[data-block-exit*="right"] {
+    border-right: 8px dashed black;
+}
+[data-block-exit*="up"] {
+    border-top: 8px dashed black;
+}
+[data-block-exit*="down"] {
+    border-bottom: 8px dashed black;
 }
