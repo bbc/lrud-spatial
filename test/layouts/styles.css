@@ -83,3 +83,16 @@ section.wide {
     display:block;
     margin-top:-10px;
 }
+
+[data-block-exit*="left"] {
+    border-left: 8px dashed black;
+}
+[data-block-exit*="right"] {
+    border-right: 8px dashed black;
+}
+[data-block-exit*="up"] {
+    border-top: 8px dashed black;
+}
+[data-block-exit*="down"] {
+    border-bottom: 8px dashed black;
+}
