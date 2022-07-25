@@ -503,7 +503,7 @@ describe('LRUD spatial', () => {
       expect(result).toEqual('item-3');
     })
 
-    it('should obey data-block-exit rules', async () => {
+    it('should apply data-block-exit rules', async () => {
       await page.goto(`${testPath}/4c-v-5f-nested.html`);
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowDown');
@@ -517,11 +517,11 @@ describe('LRUD spatial', () => {
       expect(result).toEqual('item-3');
     })
 
-    it('should obey data-block-exit rules in nested container', async () => {
+    it('should apply data-block-exit rules in nested container', async () => {
       await page.goto(`${testPath}/4c-v-5f-nested.html`);
       await page.waitForFunction('document.activeElement');
       await page.evaluate(() => {
-        return document.getElementById('item-4').focus();
+        return document.getElementById('item-6').focus();
       });
       await page.keyboard.press('ArrowDown');
 
@@ -529,7 +529,22 @@ describe('LRUD spatial', () => {
         return document.activeElement.id
       });
 
-      expect(result).toEqual('item-4');
-    })
+      expect(result).toEqual('item-6');
+    });
+
+    it('should not apply data-block-exit rules to candidates without containers', async () => {
+      await page.goto(`${testPath}/4c-v-5f-nested.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.evaluate(() => {
+        return document.getElementById('item-8').focus();
+      });
+      await page.keyboard.press('ArrowDown');
+
+      const result = await page.evaluate(() => {
+        return document.activeElement.id
+      });
+
+      expect(result).toEqual('item-9');
+    });
   })
 });
