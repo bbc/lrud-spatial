@@ -475,6 +475,76 @@ describe('LRUD spatial', () => {
 
       expect(result).toEqual('item-5');
     })
+  })
 
+  describe('Page with nested containers', () => {
+    it('should allow movement into a nested container', async () => {
+      await page.goto(`${testPath}/4c-v-5f-nested.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.keyboard.press('ArrowDown');
+
+      const result = await page.evaluate(() => {
+        return document.activeElement.id
+      });
+
+      expect(result).toEqual('item-2');
+    })
+
+    it('should allow movement out of nested container', async () => {
+      await page.goto(`${testPath}/4c-v-5f-nested.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.keyboard.press('ArrowDown');
+      await page.keyboard.press('ArrowDown');
+
+      const result = await page.evaluate(() => {
+        return document.activeElement.id
+      });
+
+      expect(result).toEqual('item-3');
+    })
+
+    it('should apply data-block-exit rules', async () => {
+      await page.goto(`${testPath}/4c-v-5f-nested.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.keyboard.press('ArrowDown');
+      await page.keyboard.press('ArrowDown');
+      await page.keyboard.press('ArrowDown');
+
+      const result = await page.evaluate(() => {
+        return document.activeElement.id
+      });
+
+      expect(result).toEqual('item-3');
+    })
+
+    it('should apply data-block-exit rules in nested container', async () => {
+      await page.goto(`${testPath}/4c-v-5f-nested.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.evaluate(() => {
+        return document.getElementById('item-6').focus();
+      });
+      await page.keyboard.press('ArrowDown');
+
+      const result = await page.evaluate(() => {
+        return document.activeElement.id
+      });
+
+      expect(result).toEqual('item-6');
+    });
+
+    it('should not apply data-block-exit rules to candidates without containers', async () => {
+      await page.goto(`${testPath}/4c-v-5f-nested.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.evaluate(() => {
+        return document.getElementById('item-8').focus();
+      });
+      await page.keyboard.press('ArrowDown');
+
+      const result = await page.evaluate(() => {
+        return document.activeElement.id
+      });
+
+      expect(result).toEqual('item-9');
+    });
   })
 });
