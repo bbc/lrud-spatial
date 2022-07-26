@@ -2,6 +2,24 @@
 
 Move focus around a HTML document using Left, Right, Up, Down keys.
 
+## API
+<pre>
+getNextFocus(<i>currentFocus</i>, <i>keyCode</i>)
+</pre>
+
+### Parameters
+* `currentFocus` should be an
+[`HTMLElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement)
+that you want LRUD spatial to consider as the element you are navigating _from_.
+In simple applications, this can just be a reference to `document.activeElement`.
+* `keyCode` should be a
+[`keyCode`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode)
+decimal representing the directional key pressed.
+
+### Returns
+An `HTMLElement` that LRUD spatial thinks you should
+navigate _to_.
+
 ## Focusables
 LRUD spatial defines focusable elements as those which match any of the
 following CSS selectors:
@@ -19,7 +37,8 @@ active focusable item within them using a `data-focus` attribute.
 When a container has no previous focus state, it's first focusable element is
 used instead.
 
-At this time, containers are defined as matching the CSS selectors: `nav`, `section` or `.lrud-container`.
+At this time, containers are defined as matching the CSS selectors:
+`nav`, `section` or `.lrud-container`.
 
 ### Block exits
 In some instances, it is desirable to prevent lrud-spatial from selecting another 
