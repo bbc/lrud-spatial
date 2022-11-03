@@ -322,7 +322,6 @@ describe('LRUD spatial', () => {
     });
   });
 
-
   describe('Page with 11 candidates, with varying sizes', () => {
     it('should focus on candidate 6 when right, down is pressed', async () => {
       await page.goto(`${testPath}/0c-v-11f-size.html`);
@@ -546,5 +545,39 @@ describe('LRUD spatial', () => {
 
       expect(result).toEqual('item-9');
     });
+  })
+
+  describe('Scope', () => {
+    beforeEach(async () => {
+      await page.goto(`${testPath}/2c-v-4f.html`);
+      await page.waitForFunction('document.activeElement');
+    })
+
+    it('should not focus on elements outside of the provided scope', async () => {
+      await page.evaluate(() => window.setScope(document.querySelector('section')))
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-1');
+      await page.keyboard.press('ArrowDown');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-1');
+      await page.keyboard.press('ArrowRight');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-2');
+      await page.keyboard.press('ArrowDown');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-2');
+    })
+
+    it('moves inside the scoped area if current focus is outside', async () => {
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-1');
+      await page.keyboard.press('ArrowDown');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-3');
+      await page.evaluate(() => window.setScope(document.querySelector('section')))
+      await page.keyboard.press('ArrowRight');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-1');
+    })
+
+    it('should ignore an invalid scope', async () => {
+      await page.evaluate(() => window.setScope(document.getElementById('doesnt-exist')))
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-1');
+      await page.keyboard.press('ArrowDown');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-3');
+    })
   })
 });
