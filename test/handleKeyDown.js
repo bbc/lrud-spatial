@@ -1,6 +1,6 @@
-import { getNextFocus } from "../../lib/lrud.js";
+import { getNextFocus } from '../../lib/lrud.js';
 
-let scope = null
+let scope = null;
 
 /**
  * Perform directional navigation
@@ -13,11 +13,11 @@ const handleKeyDown = (event) => {
   if (nextFocus) {
     nextFocus.focus();
   }
-}
+};
 
-window.setScope = (newScope) => scope = newScope
+window.setScope = (newScope) => scope = newScope;
 
-window.addEventListener('click', (e) => e.preventDefault())
+window.addEventListener('click', (e) => e.preventDefault());
 
 window.addEventListener('keydown', handleKeyDown);
 getNextFocus().focus();

@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
-const server = require('./server')
+const server = require('./server');
 
-const testPath = `${server.address}/test/layouts`
+const testPath = `${server.address}/test/layouts`;
 
 describe('LRUD spatial', () => {
   let browser;
@@ -35,13 +35,11 @@ describe('LRUD spatial', () => {
       await page.goto(`${testPath}/1c-4f.html`);
       await page.waitForFunction('document.activeElement');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-1');
     });
-  })
+  });
 
   describe('Page with one container and four candidates', () => {
     it('should focus on the second item on a right arrow press', async () => {
@@ -49,9 +47,7 @@ describe('LRUD spatial', () => {
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowRight');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-2');
     });
@@ -61,9 +57,7 @@ describe('LRUD spatial', () => {
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowDown');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-3');
     });
@@ -74,9 +68,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowDown');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-4');
     });
@@ -89,9 +81,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowLeft');
       await page.keyboard.press('ArrowUp');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-1');
     });
@@ -101,9 +91,7 @@ describe('LRUD spatial', () => {
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowLeft');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-1');
     });
@@ -114,13 +102,11 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowRight');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-2');
     });
-  })
+  });
 
   describe('Page with two vertical containers and four candidates', () => {
     it('should focus on the third item on a down arrow press', async () => {
@@ -128,9 +114,7 @@ describe('LRUD spatial', () => {
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowDown');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-3');
     });
@@ -141,9 +125,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowUp');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-1');
     });
@@ -155,9 +137,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowUp');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-1');
     });
@@ -170,9 +150,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowLeft');
       await page.keyboard.press('ArrowUp');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-2');
     });
@@ -182,9 +160,7 @@ describe('LRUD spatial', () => {
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowLeft');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-1');
     });
@@ -195,13 +171,11 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowRight');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-2');
     });
-  })
+  });
 
   describe('Page with two vertical containers and four candidates but no ids', () => {
     it('should focus on the first item on a down, up arrow press', async () => {
@@ -210,9 +184,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowUp');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.classList
-      });
+      const result = await page.evaluate(() => document.activeElement.classList);
 
       expect(result).toEqual({'0': 'first-item', '1': 'item'});
     });
@@ -224,9 +196,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowUp');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.classList
-      });
+      const result = await page.evaluate(() => document.activeElement.classList);
 
       expect(result).toEqual({'0': 'first-item', '1': 'item'});
     });
@@ -239,13 +209,11 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowLeft');
       await page.keyboard.press('ArrowUp');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.classList
-      });
+      const result = await page.evaluate(() => document.activeElement.classList);
 
       expect(result).toEqual({'0': 'first-item', '1': 'item'});
     });
-  })
+  });
 
   describe('Page with two horizontal containers and four candidates', () => {
     it('should remain focused on the first item on a down arrow press', async () => {
@@ -253,9 +221,7 @@ describe('LRUD spatial', () => {
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowDown');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-1');
     });
@@ -266,9 +232,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowRight');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-3');
     });
@@ -280,14 +244,11 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowLeft');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-2');
     });
-
-  })
+  });
 
   describe('Page with 4 candidates, where 1 is hidden and 1 has no dimensions', () => {
     /*
@@ -301,9 +262,7 @@ describe('LRUD spatial', () => {
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowLeft');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-1');
     });
@@ -314,9 +273,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowRight');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-2');
     });
@@ -329,9 +286,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowDown');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-6');
     });
@@ -343,9 +298,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowDown');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-6');
     });
@@ -358,9 +311,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowDown');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-12');
     });
@@ -375,9 +326,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowLeft');
       await page.keyboard.press('ArrowUp');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-5');
     });
@@ -391,9 +340,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowDown');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-13');
     });
@@ -408,9 +355,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowUp');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-7');
     });
@@ -424,10 +369,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowUp');
 
-
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-1');
     });
@@ -440,12 +382,10 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowDown');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-2');
-    })
+    });
 
     it('should prevent focus moving to candidate 2 when up is pressed', async () => {
       await page.goto(`${testPath}/3c-h-6f-blocked-exit.html`);
@@ -454,12 +394,10 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowUp');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-3');
-    })
+    });
 
     it('should allow container exit for non blocked directions', async () => {
       await page.goto(`${testPath}/3c-h-6f-blocked-exit.html`);
@@ -468,13 +406,11 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowDown');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-5');
-    })
-  })
+    });
+  });
 
   describe('Page with nested containers', () => {
     it('should allow movement into a nested container', async () => {
@@ -482,12 +418,10 @@ describe('LRUD spatial', () => {
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowDown');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-2');
-    })
+    });
 
     it('should allow movement out of nested container', async () => {
       await page.goto(`${testPath}/4c-v-5f-nested.html`);
@@ -495,12 +429,10 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowDown');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-3');
-    })
+    });
 
     it('should apply data-block-exit rules', async () => {
       await page.goto(`${testPath}/4c-v-5f-nested.html`);
@@ -509,24 +441,18 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowDown');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-3');
-    })
+    });
 
     it('should apply data-block-exit rules in nested container', async () => {
       await page.goto(`${testPath}/4c-v-5f-nested.html`);
       await page.waitForFunction('document.activeElement');
-      await page.evaluate(() => {
-        return document.getElementById('item-6').focus();
-      });
+      await page.evaluate(() => document.getElementById('item-6').focus());
       await page.keyboard.press('ArrowDown');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-6');
     });
@@ -534,27 +460,23 @@ describe('LRUD spatial', () => {
     it('should not apply data-block-exit rules to candidates without containers', async () => {
       await page.goto(`${testPath}/4c-v-5f-nested.html`);
       await page.waitForFunction('document.activeElement');
-      await page.evaluate(() => {
-        return document.getElementById('item-8').focus();
-      });
+      await page.evaluate(() => document.getElementById('item-8').focus());
       await page.keyboard.press('ArrowDown');
 
-      const result = await page.evaluate(() => {
-        return document.activeElement.id
-      });
+      const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-9');
     });
-  })
+  });
 
   describe('Scope', () => {
     beforeEach(async () => {
       await page.goto(`${testPath}/2c-v-4f.html`);
       await page.waitForFunction('document.activeElement');
-    })
+    });
 
     it('should not focus on elements outside of the provided scope', async () => {
-      await page.evaluate(() => window.setScope(document.querySelector('section')))
+      await page.evaluate(() => window.setScope(document.querySelector('section')));
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-1');
       await page.keyboard.press('ArrowDown');
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-1');
@@ -562,22 +484,22 @@ describe('LRUD spatial', () => {
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-2');
       await page.keyboard.press('ArrowDown');
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-2');
-    })
+    });
 
     it('moves inside the scoped area if current focus is outside', async () => {
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-1');
       await page.keyboard.press('ArrowDown');
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-3');
-      await page.evaluate(() => window.setScope(document.querySelector('section')))
+      await page.evaluate(() => window.setScope(document.querySelector('section')));
       await page.keyboard.press('ArrowRight');
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-1');
-    })
+    });
 
     it('should ignore an invalid scope', async () => {
-      await page.evaluate(() => window.setScope(document.getElementById('doesnt-exist')))
+      await page.evaluate(() => window.setScope(document.getElementById('doesnt-exist')));
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-1');
       await page.keyboard.press('ArrowDown');
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-3');
-    })
-  })
+    });
+  });
 });

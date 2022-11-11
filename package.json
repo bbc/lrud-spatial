@@ -10,7 +10,8 @@
     "test": "jest",
     "build": "rm -f lib/lrud.min.js && babel lib --out-file lib/lrud.min.js",
     "server": "node ./test/server.js",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,9 @@
   },
   "homepage": "https://github.com/bbc/lrud-spatial#readme",
   "devDependencies": {
+    "eslint": "^8.27.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-jest-formatting": "^3.1.0",
     "jest": "^26.6.3",
     "puppeteer": "^5.4.1"
   },

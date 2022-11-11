@@ -1,0 +1,41 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "jest-formatting"
+  ],
+  "env": {
+    "es6": true,
+    "browser": true,
+    "jest": true
+  },
+  "extends": [
+    "eslint:recommended"
+  ],
+  "ignorePatterns": ["*.min.js", "*.config.js"],
+  "overrides": [
+    {
+      "files": ["*.js", "*.ts", "*.tsx"],
+      "rules": {
+        "no-unused-vars": "error",
+        "no-trailing-spaces": "error",
+        "no-multi-spaces": "error",
+        "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0, "maxBOF": 0}],
+        "key-spacing": "error",
+        "semi": "error",
+        "space-in-parens": "error",
+        "comma-spacing": "error",
+        "keyword-spacing": "error",
+        "arrow-spacing": "error",
+        "padded-blocks": ["error", "never"],
+        "quotes": ["error", "single"],
+        "arrow-body-style": ["error", "as-needed"],
+        "space-before-blocks": ["error", "always"],
+        "jest-formatting/padding-around-describe-blocks": "error",
+        "jest-formatting/padding-around-test-blocks": "error"
+      }
+    }
+  ]
+}
