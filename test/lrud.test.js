@@ -11,6 +11,7 @@ describe('LRUD spatial', () => {
   beforeAll(async () => {
     await server.listen();
     browser = await puppeteer.launch({
+      executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
       defaultViewport: {width: 1280, height: 800}
     });
     context = await browser.createIncognitoBrowserContext();
@@ -528,6 +529,19 @@ describe('LRUD spatial', () => {
 
         expect(result).toEqual('item-8');
       });
+    });
+  });
+
+  describe('Conatiner with empty space', () => {
+    it('should move to a further item if it is in a closer container in the same direction', async () => {
+      await page.goto(`${testPath}/container-with-empty-space.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.evaluate(() => document.getElementById('item-4').focus());
+      await page.keyboard.press('ArrowDown');
+
+      const result = await page.evaluate(() => document.activeElement.id);
+
+      expect(result).toEqual('item-5');
     });
   });
 });
