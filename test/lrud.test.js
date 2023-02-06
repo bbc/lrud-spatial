@@ -514,8 +514,8 @@ describe('LRUD spatial', () => {
         const result = await page.evaluate(() => document.activeElement.id);
 
         expect(result).toEqual('item-7');
-      })
-    })
+      });
+    });
 
     describe('Non Prioritised', () => {
       it('should select the closest candidate regardless of positions of sibling candidates', async () => {
@@ -527,7 +527,7 @@ describe('LRUD spatial', () => {
         const result = await page.evaluate(() => document.activeElement.id);
 
         expect(result).toEqual('item-8');
-      })
-    })
-  })
+      });
+    });
+  });
 });
