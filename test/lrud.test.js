@@ -502,4 +502,32 @@ describe('LRUD spatial', () => {
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-3');
     });
   });
+
+  describe('Prioritised Containers', () => {
+    describe('Prioritised', () => {
+      it('should select a candidate within the same container over an external candidate', async () => {
+        await page.goto(`${testPath}/grid-with-one-item.html`);
+        await page.waitForFunction('document.activeElement');
+        await page.evaluate(() => document.getElementById('item-6').focus());
+        await page.keyboard.press('ArrowDown');
+
+        const result = await page.evaluate(() => document.activeElement.id);
+
+        expect(result).toEqual('item-7');
+      })
+    })
+
+    describe('Non Prioritised', () => {
+      it('should select the closest candidate regardless of positions of sibling candidates', async () => {
+        await page.goto(`${testPath}/grid-with-one-item-non-prioritised.html`);
+        await page.waitForFunction('document.activeElement');
+        await page.evaluate(() => document.getElementById('item-6').focus());
+        await page.keyboard.press('ArrowDown');
+
+        const result = await page.evaluate(() => document.activeElement.id);
+
+        expect(result).toEqual('item-8');
+      })
+    })
+  })
 });
