@@ -529,11 +529,34 @@ describe('LRUD spatial', () => {
 
         expect(result).toEqual('item-8');
       });
+
+      it('should consider candidates based off of the container that they are in, regardless of if they are siblings', async () => {
+        await page.goto(`${testPath}/grid-with-one-item-non-prioritised-carousel-with-one-item.html`);
+        await page.waitForFunction('document.activeElement');
+        await page.evaluate(() => document.getElementById('item-6').focus());
+        await page.keyboard.press('ArrowDown');
+
+        const result = await page.evaluate(() => document.activeElement.id);
+
+        expect(result).toEqual('item-9');
+      });
+
+      it('moves inside the scoped area if current focus is outside, and in a non prioritised container', async () => {
+        await page.goto(`${testPath}/grid-with-one-item-non-prioritised.html`);
+        await page.waitForFunction('document.activeElement');
+        await page.evaluate(() => document.getElementById('item-6').focus());
+        await page.evaluate(() => window.setScope(document.getElementById('some-section')));
+        await page.keyboard.press('ArrowDown');
+
+        const result = await page.evaluate(() => document.activeElement.id);
+
+        expect(result).toEqual('item-9');
+      });
     });
   });
 
-  describe('Conatiner with empty space', () => {
-    it('should move to a further item if it is in a closer container in the same direction', async () => {
+  describe('Container with empty space', () => {
+    it('should move to the first item of the closest container', async () => {
       await page.goto(`${testPath}/container-with-empty-space.html`);
       await page.waitForFunction('document.activeElement');
       await page.evaluate(() => document.getElementById('item-4').focus());
@@ -542,6 +565,19 @@ describe('LRUD spatial', () => {
       const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-5');
+    });
+
+    describe('Non Prioritised', () => {
+      it('should move to the first item of the closest container without prioritising siblings', async () => {
+        await page.goto(`${testPath}/grid-with-one-item-non-prioritised-carousel-with-empty-space.html`);
+        await page.waitForFunction('document.activeElement');
+        await page.evaluate(() => document.getElementById('item-6').focus());
+        await page.keyboard.press('ArrowDown');
+
+        const result = await page.evaluate(() => document.activeElement.id);
+
+        expect(result).toEqual('item-9');
+      });
     });
   });
 });
