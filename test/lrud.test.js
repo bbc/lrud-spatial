@@ -576,7 +576,7 @@ describe('LRUD spatial', () => {
 
         const result = await page.evaluate(() => document.activeElement.id);
 
-        expect(result).toEqual('item-9');
+        expect(result).toEqual('item-8');
       });
     });
   });
