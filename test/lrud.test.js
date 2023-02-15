@@ -11,6 +11,7 @@ describe('LRUD spatial', () => {
   beforeAll(async () => {
     await server.listen();
     browser = await puppeteer.launch({
+      executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
       defaultViewport: {width: 1280, height: 800}
     });
     context = await browser.createIncognitoBrowserContext();
@@ -500,6 +501,83 @@ describe('LRUD spatial', () => {
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-1');
       await page.keyboard.press('ArrowDown');
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-3');
+    });
+  });
+
+  describe('Prioritised Containers', () => {
+    describe('Prioritised', () => {
+      it('should select a candidate within the same container over an external candidate', async () => {
+        await page.goto(`${testPath}/grid-with-one-item.html`);
+        await page.waitForFunction('document.activeElement');
+        await page.evaluate(() => document.getElementById('item-6').focus());
+        await page.keyboard.press('ArrowDown');
+
+        const result = await page.evaluate(() => document.activeElement.id);
+
+        expect(result).toEqual('item-7');
+      });
+    });
+
+    describe('Non Prioritised', () => {
+      it('should select the closest candidate regardless of positions of sibling candidates', async () => {
+        await page.goto(`${testPath}/grid-with-one-item-non-prioritised.html`);
+        await page.waitForFunction('document.activeElement');
+        await page.evaluate(() => document.getElementById('item-6').focus());
+        await page.keyboard.press('ArrowDown');
+
+        const result = await page.evaluate(() => document.activeElement.id);
+
+        expect(result).toEqual('item-8');
+      });
+
+      it('should consider candidates based off of the container that they are in, regardless of if they are siblings', async () => {
+        await page.goto(`${testPath}/grid-with-one-item-non-prioritised-carousel-with-one-item.html`);
+        await page.waitForFunction('document.activeElement');
+        await page.evaluate(() => document.getElementById('item-6').focus());
+        await page.keyboard.press('ArrowDown');
+
+        const result = await page.evaluate(() => document.activeElement.id);
+
+        expect(result).toEqual('item-9');
+      });
+
+      it('moves inside the scoped area if current focus is outside, and in a non prioritised container', async () => {
+        await page.goto(`${testPath}/grid-with-one-item-non-prioritised.html`);
+        await page.waitForFunction('document.activeElement');
+        await page.evaluate(() => document.getElementById('item-6').focus());
+        await page.evaluate(() => window.setScope(document.getElementById('some-section')));
+        await page.keyboard.press('ArrowDown');
+
+        const result = await page.evaluate(() => document.activeElement.id);
+
+        expect(result).toEqual('item-9');
+      });
+    });
+  });
+
+  describe('Container with empty space', () => {
+    it('should move to the first item of the closest container', async () => {
+      await page.goto(`${testPath}/container-with-empty-space.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.evaluate(() => document.getElementById('item-4').focus());
+      await page.keyboard.press('ArrowDown');
+
+      const result = await page.evaluate(() => document.activeElement.id);
+
+      expect(result).toEqual('item-5');
+    });
+
+    describe('Non Prioritised', () => {
+      it('should move to the first item of the closest container without prioritising siblings', async () => {
+        await page.goto(`${testPath}/grid-with-one-item-non-prioritised-carousel-with-empty-space.html`);
+        await page.waitForFunction('document.activeElement');
+        await page.evaluate(() => document.getElementById('item-6').focus());
+        await page.keyboard.press('ArrowDown');
+
+        const result = await page.evaluate(() => document.activeElement.id);
+
+        expect(result).toEqual('item-8');
+      });
     });
   });
 });
