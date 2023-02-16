@@ -4,6 +4,7 @@
   ],
   "plugins": [
     ["@babel/plugin-transform-destructuring", { "loose": true }],
+    ["@babel/plugin-transform-spread", { "loose": true }],
     ["@babel/plugin-transform-modules-commonjs", { "loose": true }]
   ],
   "minified": true,
