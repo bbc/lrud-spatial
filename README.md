@@ -29,6 +29,9 @@ following CSS selectors:
 * `button`
 * `input`
 
+### Ignoring Focusables
+Any focusable with the `lrud-ignore` class, or inside any parent with the `lrud-ignore` class, will not be considered focusable and will be skipped over. LRUD will not ignore candidates that have `opacity: 0` or have a parent with `opacity: 0`, so this class can be used to that effect.
+
 ## Containers
 Focusables can be wrapped in containers. Containers can keep track of the last
 active focusable item within them using a `data-focus` attribute.
