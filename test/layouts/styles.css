@@ -55,7 +55,13 @@ section.panel, div.panel {
 }
 
 .hidden {
-    display:none;
+    display: none;
+}
+
+.lrud-ignore {
+    opacity: 0.5;
+    background-color: lightgray;
+    font-style: italic;
 }
 
 .no-dimensions { width:0; height:0; border:0; padding:0; }

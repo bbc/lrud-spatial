@@ -251,32 +251,34 @@ describe('LRUD spatial', () => {
     });
   });
 
-  describe('Page with 4 candidates, where 1 is hidden and 1 has no dimensions', () => {
+  describe('Invisible elements', () => {
     /*
      * Elements that are `display: none` or `visibility: hidden` have their
-     * width, height, and coordinates set to 0.
+     * width, height, and coordinates set to 0. These should not be considered focusable candidates.
      *
-     * These should not be considered focusable candidates.
+     * Elements with the `lrud-ignore` class, or inside a parent with the `lrud-ignore` class, should
+     * be not be considered focusable candidates
+     *
      */
-    it('should remain focused on candidate 1 when left is pressed', async () => {
-      await page.goto(`${testPath}/0c-4f-hidden.html`);
+    it('should ignore hidden items as possible candidates and move past them', async () => {
+      await page.goto(`${testPath}/hidden.html`);
       await page.waitForFunction('document.activeElement');
-      await page.keyboard.press('ArrowLeft');
+      await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('ArrowRight');
 
       const result = await page.evaluate(() => document.activeElement.id);
 
-      expect(result).toEqual('item-1');
+      expect(result).toEqual('item-6');
     });
 
-    it('should remain focussed on candidate 2 when right, right is pressed', async () => {
-      await page.goto(`${testPath}/0c-4f-hidden.html`);
+    it('should ignore visible items inside ignored containers', async () => {
+      await page.goto(`${testPath}/hidden.html`);
       await page.waitForFunction('document.activeElement');
-      await page.keyboard.press('ArrowRight');
-      await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('ArrowDown');
 
       const result = await page.evaluate(() => document.activeElement.id);
 
-      expect(result).toEqual('item-2');
+      expect(result).toEqual('item-9');
     });
   });
 
