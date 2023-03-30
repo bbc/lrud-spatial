@@ -59,8 +59,7 @@ section.panel, div.panel {
 }
 
 .lrud-ignore {
-    opacity: 0.5;
-    background-color: lightgray;
+    background: repeating-linear-gradient(45deg, #d3d3d355, #d3d3d355 10px, #d3d3d3bb 10px, #d3d3d3bb 20px);
     font-style: italic;
 }
 
