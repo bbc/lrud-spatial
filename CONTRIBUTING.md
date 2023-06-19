@@ -18,7 +18,7 @@ If you cannot find an existing issue that describes your bug or feature, create 
 3. Follow your issue in the issue tracking workflow
 
 ## Contributing Code
-> For significant feature changes, be sure to open an issue first to gather feedback from the package maintainers.
+> For significant feature changes, be sure to open an issue with the `feature-request` template first to gather feedback from the package maintainers.
 
 BBC staff may have push access to the repository, in which case you may clone this repository and create a working branch with a _kebab-case_ name reflecting what you are working on (e.g. `fix-the-thing`). Otherwise please [fork it](https://help.github.com/en/articles/fork-a-repo). You should then work on your own `master` branch.
 
