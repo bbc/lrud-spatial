@@ -1,5 +1,5 @@
 {
-  "name": "lrud-spatial",
+  "name": "tv-lrud-spatial",
   "version": "0.0.1",
   "description": "Spatial navigation library",
   "main": "lib/lrud.min.js",
