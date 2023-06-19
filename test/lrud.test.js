@@ -11,7 +11,6 @@ describe('LRUD spatial', () => {
   beforeAll(async () => {
     await server.listen();
     browser = await puppeteer.launch({
-      executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
       defaultViewport: {width: 1280, height: 800}
     });
     context = await browser.createIncognitoBrowserContext();
