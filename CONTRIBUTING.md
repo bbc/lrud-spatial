@@ -28,4 +28,4 @@ Ensure all your code is thoroughly tested and that this testing is detailed in t
 
 ## Pull Request Process
 1. Read and complete all relevant sections of the PR template
-2. You may merge the Pull Request once you have the sign-off of a maintainer
+2. The Pull Request can be merged once signed-off by a maintainer
