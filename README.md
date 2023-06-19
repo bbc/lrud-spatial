@@ -1,4 +1,6 @@
-# lrud-spatial
+<p align="center">
+  <img src=".github/lrud.svg" alt="LRUD spatial"/>
+</p>
 
 Move focus around a HTML document using Left, Right, Up, Down keys.
 
