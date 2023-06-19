@@ -98,3 +98,6 @@ To investigate why a test is failing, or just to hack on some changes... run
 select a layout.
 
 > Remember to terminate this process before running the tests again!
+
+## Contact
+[TVOpenSource@bbc.co.uk](mailto:TVOpenSource@bbc.co.uk)
