@@ -582,4 +582,30 @@ describe('LRUD spatial', () => {
       });
     });
   });
+
+  describe('Last active child', () => {
+    beforeEach(async () => {
+      await page.goto(`${testPath}/2c-v-11f-size.html`);
+      await page.waitForFunction('document.activeElement');
+    });
+
+    it('should return to the last active child when re-entering a container', async () => {
+      await page.evaluate(() => document.getElementById('item-7').focus());
+      await page.keyboard.press('ArrowDown');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-8');
+
+      await page.keyboard.press('ArrowUp');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-7');
+    });
+
+    it('should focus the containers first child if the last active child no longer exists', async () => {
+      await page.evaluate(() => document.getElementById('item-7').focus());
+      await page.keyboard.press('ArrowDown');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-8');
+      await page.evaluate(() => document.getElementById('item-7').remove());
+
+      await page.keyboard.press('ArrowUp');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-1');
+    });
+  });
 });
