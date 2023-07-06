@@ -1,5 +1,5 @@
 {
-  "name": "tv-lrud-spatial",
+  "name": "@bbc/tv-lrud-spatial",
   "version": "0.0.1",
   "description": "Spatial navigation library",
   "main": "lib/lrud.min.js",
@@ -10,7 +10,6 @@
     "test": "jest",
     "build": "rm -f lib/lrud.min.js && babel lib --out-file lib/lrud.min.js",
     "server": "node ./test/server.js",
-    "postinstall": "npm run build",
     "lint": "eslint .",
     "prepare": "husky install"
   },
