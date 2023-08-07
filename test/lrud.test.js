@@ -471,6 +471,21 @@ describe('LRUD spatial', () => {
     });
   });
 
+  describe('Page with small or close items', () => {
+    it('should not skip items with far away corners', async () => {
+      await page.goto(`${testPath}/wide-items.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.keyboard.press('ArrowDown');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-3');
+      await page.keyboard.press('ArrowLeft');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-2');
+      await page.keyboard.press('ArrowUp');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-1');
+      await page.keyboard.press('ArrowDown');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-3');
+    });
+  });
+
   describe('Scope', () => {
     beforeEach(async () => {
       await page.goto(`${testPath}/2c-v-4f.html`);
