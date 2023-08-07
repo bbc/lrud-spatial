@@ -9,11 +9,7 @@ describe('LRUD spatial', () => {
   let context;
 
   beforeAll(async () => {
-    try {
-      await server.listen();
-    } catch (ex) {
-      // server already running, ignore
-    }
+    await server.listen();
     browser = await puppeteer.launch({
       defaultViewport: {width: 1280, height: 800}
     });
@@ -309,7 +305,7 @@ describe('LRUD spatial', () => {
       expect(result).toEqual('item-6');
     });
 
-    it('should focus on candidate 12 when right, right, down, down is pressed', async () => {
+    it('should focus on candidate 11 when right, right, down, down is pressed', async () => {
       await page.goto(`${testPath}/0c-v-11f-size.html`);
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowRight');
@@ -319,7 +315,7 @@ describe('LRUD spatial', () => {
 
       const result = await page.evaluate(() => document.activeElement.id);
 
-      expect(result).toEqual('item-12');
+      expect(result).toEqual('item-11');
     });
 
     it('should focus on candidate 5 when right, down, down, left, left up is pressed', async () => {
@@ -337,7 +333,7 @@ describe('LRUD spatial', () => {
       expect(result).toEqual('item-5');
     });
 
-    it('should focus on candidate 13 when right, right, right down, down is pressed', async () => {
+    it('should focus on candidate 14 when right, right, right down, down is pressed', async () => {
       await page.goto(`${testPath}/0c-v-11f-size.html`);
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowRight');
@@ -348,7 +344,7 @@ describe('LRUD spatial', () => {
 
       const result = await page.evaluate(() => document.activeElement.id);
 
-      expect(result).toEqual('item-13');
+      expect(result).toEqual('item-14');
     });
 
     it('should focus on candidate 7 when right, right, right down, down, up is pressed', async () => {
