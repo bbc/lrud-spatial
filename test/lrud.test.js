@@ -9,7 +9,11 @@ describe('LRUD spatial', () => {
   let context;
 
   beforeAll(async () => {
-    await server.listen();
+    try {
+      await server.listen();
+    } catch (ex) {
+      // server already running, ignore
+    }
     browser = await puppeteer.launch({
       defaultViewport: {width: 1280, height: 800}
     });
