@@ -1,0 +1,39 @@
+<h1>Tiled items</h1>
+ <style>
+  .item.tile {
+    display: inline-block;
+    height: 16px;
+    margin: 2px
+  }
+
+  .item.tile:nth-child(2n) {
+    width: 100px
+  }
+
+  .item.tile:nth-child(3n) {
+    width: 30px;
+  }
+
+  .item.tile:nth-child(5n) {
+    width: 160px;
+  }
+
+  .item.tile:nth-child(8n) {
+    width: 14px;
+  }
+ </style>
+ <section class="wide">
+   <a id="item-1" class="item tile" href="">
+       <h2>1</h2>
+   </a>
+ </section>
+
+ <script>
+  const item = document.getElementById('item-1')
+  for (let i = 2; i < 50; i++) {
+    const nextItem = item.cloneNode(true)
+    nextItem.id = `item-${i}`
+    nextItem.innerHTML = `<h2>${i}</h2>`
+    item.parentElement.appendChild(nextItem)
+  }
+</script>
