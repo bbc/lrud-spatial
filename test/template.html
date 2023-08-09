@@ -31,8 +31,6 @@
         const distance = ([a, b]) => Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2))
         window.drawLines = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height)
-            const colours = ['red', 'orange', 'yellow', 'blue', 'green', 'pink', 'magenta', 'cyan', 'lime'];
-            const colour = colours[Math.floor(Math.random() * colours.length)];
             lines.sort((a, b) => distance(a) - distance(b))
             if(!lines) return
             const bestLine = lines.shift()
