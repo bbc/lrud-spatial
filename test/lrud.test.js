@@ -305,7 +305,7 @@ describe('LRUD spatial', () => {
       expect(result).toEqual('item-6');
     });
 
-    it('should focus on candidate 12 when right, right, down, down is pressed', async () => {
+    it('should focus on candidate 11 when right, right, down, down is pressed', async () => {
       await page.goto(`${testPath}/0c-v-11f-size.html`);
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowRight');
@@ -315,7 +315,7 @@ describe('LRUD spatial', () => {
 
       const result = await page.evaluate(() => document.activeElement.id);
 
-      expect(result).toEqual('item-12');
+      expect(result).toEqual('item-11');
     });
 
     it('should focus on candidate 5 when right, down, down, left, left up is pressed', async () => {
@@ -333,7 +333,7 @@ describe('LRUD spatial', () => {
       expect(result).toEqual('item-5');
     });
 
-    it('should focus on candidate 13 when right, right, right down, down is pressed', async () => {
+    it('should focus on candidate 14 when right, right, right down, down is pressed', async () => {
       await page.goto(`${testPath}/0c-v-11f-size.html`);
       await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowRight');
@@ -344,7 +344,7 @@ describe('LRUD spatial', () => {
 
       const result = await page.evaluate(() => document.activeElement.id);
 
-      expect(result).toEqual('item-13');
+      expect(result).toEqual('item-14');
     });
 
     it('should focus on candidate 7 when right, right, right down, down, up is pressed', async () => {
@@ -468,6 +468,28 @@ describe('LRUD spatial', () => {
       const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-9');
+    });
+  });
+
+  describe('Page with small or close items', () => {
+    it('should not skip items with far away corners', async () => {
+      await page.goto(`${testPath}/tiled-items.html`);
+      await page.evaluate(() => document.getElementById('item-48').focus());
+      await page.waitForFunction('document.activeElement');
+      await page.keyboard.press('ArrowUp');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-41');
+      await page.keyboard.press('ArrowDown');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-48');
+    });
+
+    it('should go to the most central item when there are multiple below the exit edge', async () => {
+      await page.goto(`${testPath}/tiled-items.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('ArrowRight');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-3');
+      await page.keyboard.press('ArrowDown');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-11');
     });
   });
 

@@ -17,7 +17,11 @@ const handleKeyDown = (event) => {
 
 window.setScope = (newScope) => scope = newScope;
 
-window.addEventListener('click', (e) => e.preventDefault());
+window.addEventListener('click', (e) => {
+  if (e.target.nodeName !== 'INPUT') {
+    e.preventDefault();
+  }
+});
 
 window.addEventListener('keydown', handleKeyDown);
 getNextFocus().focus();
