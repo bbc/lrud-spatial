@@ -8,7 +8,6 @@ body {
     padding:15px;
     background-color: aliceblue;
     overscroll-behavior: none;
-    overflow: hidden;
 }
 
 section, .lrud-container {
