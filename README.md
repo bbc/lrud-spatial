@@ -5,36 +5,43 @@
 Move focus around a HTML document using Left, Right, Up, Down keys.
 
 ## API
+
 <pre>
 getNextFocus(<i>currentFocus</i>, <i>keyCode</i>, <i>[scope]</i>)
 </pre>
 
 ### Parameters
-* `currentFocus` should be an
-[`HTMLElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement)
-that you want LRUD spatial to consider as the element you are navigating _from_.
-In simple applications, this can just be a reference to `document.activeElement`.
-* `keyCode` should be a
-[`keyCode`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode)
-decimal representing the directional key pressed.
-* `scope` is an optional `HTMLElement` that you only want to look for focusable candidates inside of. Defaults to the whole page if not provided.
+
+- `currentFocus` should be an
+  [`HTMLElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement)
+  that you want LRUD spatial to consider as the element you are navigating _from_.
+  In simple applications, this can just be a reference to `document.activeElement`.
+- `keyCode` should be a
+  [`keyCode`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode)
+  decimal representing the directional key pressed.
+- `scope` is an optional `HTMLElement` that you only want to look for focusable candidates inside of. Defaults to the whole page if not provided.
 
 ### Returns
+
 An `HTMLElement` that LRUD spatial thinks you should
 navigate _to_.
 
 ## Focusables
+
 LRUD spatial defines focusable elements as those which match any of the
 following CSS selectors:
-* `[tabindex]`
-* `a`
-* `button`
-* `input`
+
+- `[tabindex]`
+- `a`
+- `button`
+- `input`
 
 ### Ignoring Focusables
+
 Any potential candidate with the `lrud-ignore` class, or inside any parent with the `lrud-ignore` class, will not be considered focusable and will be skipped over. By default LRUD will not ignore candidates that have `opacity: 0` or have a parent with `opacity: 0`, so this class can be used for that.
 
 ## Containers
+
 Focusables can be wrapped in containers. Containers can keep track of the last
 active focusable item within them using a `data-focus` attribute.
 
@@ -46,20 +53,23 @@ used instead.
 At this time, containers are defined as matching the CSS selectors:
 `nav`, `section` or `.lrud-container`.
 
+Adding attribute `data-lrud-consider-container-distance` on a container will make LRUD also measure distances to that container's boundary, as well as its children. If the container is the closest of all the possible candidates assessed, LRUD will return one of its children - even if they are not necessarily the spatially closest focusable. The above container focus logic will still be used, so if the container has a previous focus state that will be the returned element. This allows for layouts where moving between containers is the desired behaviour, but their individual elements may not be in the correct positions for that. By default LRUD will only consider focusables when measuring, and ignores container positions.
+
 ### Block exits
-In some instances, it is desirable to prevent lrud-spatial from selecting another 
-"best candidate" for example at the bottom of a list. To do this, a container element 
-should add an additional `data-block-exit` attribute to prevent further selection in 
+
+In some instances, it is desirable to prevent lrud-spatial from selecting another
+"best candidate" for example at the bottom of a list. To do this, a container element
+should add an additional `data-block-exit` attribute to prevent further selection in
 that direction. This should be a space separated list.
 
-E.g. 
+E.g.
+
 ```html
-<div class="lrud-container" data-block-exit="up down">
-   ...
-</div>
+<div class="lrud-container" data-block-exit="up down">...</div>
 ```
 
 ## How does it work?
+
 To determine the next element that should be focused;
 
 1. Uses the key code to get the direction of movement
@@ -71,16 +81,19 @@ To determine the next element that should be focused;
    length
 
 ## Developing
+
 Requirements: Node.js 18
 
 To get started, run `npm ci`.
 
 ### Building
+
 `npm run build` will emit a transpiled and minified version of the library.
 This is run during CI to prepare the artifact published to NPM. It can also be
 useful for integrating against another local project with `npm link`.
 
 ### Testing
+
 The `test/layouts` directory contains HTML designed to mirror various
 real-world use cases, and allow for behavioural vertification of library
 features such as containers and grids.
@@ -90,6 +103,7 @@ Significant new features should come with corresponding layouts that test them.
 Use `npm test` to run the tests.
 
 #### Debugging
+
 The tests use [puppeteer](https://github.com/puppeteer/puppeteer) to spin up a
 headless browser. The browser loads the layouts mentioned above and runs
 scenarios from [lrud.test.js](./test/lrud.test.js) against the unminified
@@ -102,4 +116,5 @@ select a layout.
 > Remember to terminate this process before running the tests again!
 
 ## Contact
+
 [TVOpenSource@bbc.co.uk](mailto:TVOpenSource@bbc.co.uk)

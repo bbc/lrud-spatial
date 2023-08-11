@@ -529,10 +529,20 @@ describe('LRUD spatial', () => {
 
   describe('Prioritised Containers', () => {
     describe('Prioritised', () => {
-      it('should select a candidate within the same container over an external candidate', async () => {
-        await page.goto(`${testPath}/grid-with-one-item.html`);
-        await page.waitForFunction('document.activeElement');
-        await page.evaluate(() => document.getElementById('item-6').focus());
+      it('should select a candidate within the same container over a closer external candidate', async () => {
+        await page.goto(`${testPath}/container-with-empty-space.html`);
+        await page.evaluate(() => document.getElementById('item-4').focus());
+        await page.keyboard.press('ArrowDown');
+
+        const result = await page.evaluate(() => document.activeElement.id);
+
+        expect(result).toEqual('item-5');
+      });
+
+      it('moves inside the scoped area if current focus is outside, and ignore prioritised siblings', async () => {
+        await page.goto(`${testPath}/container-with-empty-space.html`);
+        await page.evaluate(() => document.getElementById('item-1').focus());
+        await page.evaluate(() => window.setScope(document.getElementById('section-3')));
         await page.keyboard.press('ArrowDown');
 
         const result = await page.evaluate(() => document.activeElement.id);
@@ -542,65 +552,55 @@ describe('LRUD spatial', () => {
     });
 
     describe('Non Prioritised', () => {
+      beforeEach(async () => {
+        await page.goto(`${testPath}/container-with-empty-space.html`);
+        await page.waitForFunction('document.activeElement');
+        await page.evaluate(() => document.getElementById('section-1').setAttribute('data-lrud-prioritise-children', false));
+        await page.evaluate(() => document.getElementById('section-3').setAttribute('data-lrud-prioritise-children', false));
+      });
+
       it('should select the closest candidate regardless of positions of sibling candidates', async () => {
-        await page.goto(`${testPath}/grid-with-one-item-non-prioritised.html`);
-        await page.waitForFunction('document.activeElement');
-        await page.evaluate(() => document.getElementById('item-6').focus());
+        await page.evaluate(() => document.getElementById('item-4').focus());
         await page.keyboard.press('ArrowDown');
 
         const result = await page.evaluate(() => document.activeElement.id);
 
-        expect(result).toEqual('item-8');
+        expect(result).toEqual('item-7');
       });
 
-      it('should consider candidates based off of the container that they are in, regardless of if they are siblings', async () => {
-        await page.goto(`${testPath}/grid-with-one-item-non-prioritised-carousel-with-one-item.html`);
-        await page.waitForFunction('document.activeElement');
-        await page.evaluate(() => document.getElementById('item-6').focus());
+      it('moves inside the scoped area if current focus is outside', async () => {
+        await page.evaluate(() => document.getElementById('item-1').focus());
+        await page.evaluate(() => window.setScope(document.getElementById('section-3')));
         await page.keyboard.press('ArrowDown');
 
         const result = await page.evaluate(() => document.activeElement.id);
 
-        expect(result).toEqual('item-9');
-      });
-
-      it('moves inside the scoped area if current focus is outside, and in a non prioritised container', async () => {
-        await page.goto(`${testPath}/grid-with-one-item-non-prioritised.html`);
-        await page.waitForFunction('document.activeElement');
-        await page.evaluate(() => document.getElementById('item-6').focus());
-        await page.evaluate(() => window.setScope(document.getElementById('some-section')));
-        await page.keyboard.press('ArrowDown');
-
-        const result = await page.evaluate(() => document.activeElement.id);
-
-        expect(result).toEqual('item-9');
+        expect(result).toEqual('item-7');
       });
     });
   });
 
-  describe('Container with empty space', () => {
-    it('should move to the first item of the closest container', async () => {
-      await page.goto(`${testPath}/container-with-empty-space.html`);
+  describe('Focusable containers', () => {
+    it('should move into a focusable container that is nearer than any other focusable candidates', async () => {
+      await page.goto(`${testPath}/focusable-container-with-empty-space.html`);
       await page.waitForFunction('document.activeElement');
       await page.evaluate(() => document.getElementById('item-4').focus());
       await page.keyboard.press('ArrowDown');
 
       const result = await page.evaluate(() => document.activeElement.id);
 
-      expect(result).toEqual('item-5');
+      expect(result).toEqual('item-6');
     });
 
-    describe('Non Prioritised', () => {
-      it('should move to the first item of the closest container without prioritising siblings', async () => {
-        await page.goto(`${testPath}/grid-with-one-item-non-prioritised-carousel-with-empty-space.html`);
-        await page.waitForFunction('document.activeElement');
-        await page.evaluate(() => document.getElementById('item-6').focus());
-        await page.keyboard.press('ArrowDown');
+    it('should not move into a focusable container that has no focusable children', async () => {
+      await page.goto(`${testPath}/focusable-container-with-empty-space.html`);
+      await page.evaluate(() => document.getElementById('item-6').remove());
+      await page.evaluate(() => document.getElementById('item-4').focus());
+      await page.keyboard.press('ArrowDown');
 
-        const result = await page.evaluate(() => document.activeElement.id);
+      const result = await page.evaluate(() => document.activeElement.id);
 
-        expect(result).toEqual('item-8');
-      });
+      expect(result).toEqual('item-7');
     });
   });
 
