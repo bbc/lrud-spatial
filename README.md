@@ -53,7 +53,7 @@ used instead.
 At this time, containers are defined as matching the CSS selectors:
 `nav`, `section` or `.lrud-container`.
 
-The class `.lrud-container-focusable` will make a container also be considered a focusable candidate. This means that even if its children are not necessarily the spatially nearest move but the container is, it will be moved into. This allows for layouts where moving between containers is the desired behaviour, but their individual items may not always be in the correct positions for that. By default they are not focusable.
+Adding attribute `data-lrud-consider-container-distance` on a container will make LRUD also measure distances to that container's boundary, as well as its children. If the container is the closest of all the possible candidates assessed, LRUD will return one of its children - even if they are not necessarily the spatially closest focusable. The above container focus logic will still be used, so if the container has a previous focus state that will be the returned element. This allows for layouts where moving between containers is the desired behaviour, but their individual elements may not be in the correct positions for that. By default LRUD will only consider focusables when measuring, and ignores container positions.
 
 ### Block exits
 
