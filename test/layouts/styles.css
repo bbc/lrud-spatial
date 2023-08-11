@@ -18,6 +18,10 @@ section, .lrud-container {
     background-color: #5b7084;
 }
 
+.lrud-container-focusable {
+    outline: 4px dashed black;
+}
+
 section > section, .lrud-container > .lrud-container {
     background-color: #879db2;
     margin: 10px;
@@ -102,4 +106,8 @@ section.wide {
 }
 [data-block-exit*="down"] {
     border-bottom: 8px dashed black;
+}
+
+[data-lrud-prioritise-children="false"] {
+    background-color: #969681;
 }
