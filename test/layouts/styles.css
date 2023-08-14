@@ -8,7 +8,6 @@ body {
     padding:15px;
     background-color: aliceblue;
     overscroll-behavior: none;
-    overflow: hidden;
 }
 
 section, .lrud-container {
@@ -102,4 +101,12 @@ section.wide {
 }
 [data-block-exit*="down"] {
     border-bottom: 8px dashed black;
+}
+
+[data-lrud-prioritise-children="false"] {
+    background-color: #969681;
+}
+
+[data-lrud-consider-container-distance] {
+    outline: 4px dashed black;
 }
