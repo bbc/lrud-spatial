@@ -472,10 +472,13 @@ describe('LRUD spatial', () => {
   });
 
   describe('Page with small or close items', () => {
-    it('should not skip items with far away corners', async () => {
+    beforeEach(async () => {
       await page.goto(`${testPath}/tiled-items.html`);
-      await page.evaluate(() => document.getElementById('item-48').focus());
       await page.waitForFunction('document.activeElement');
+    });
+
+    it('should not skip items with far away corners', async () => {
+      await page.evaluate(() => document.getElementById('item-48').focus());
       await page.keyboard.press('ArrowUp');
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-41');
       await page.keyboard.press('ArrowDown');
@@ -483,13 +486,17 @@ describe('LRUD spatial', () => {
     });
 
     it('should go to the most central item when there are multiple below the exit edge', async () => {
-      await page.goto(`${testPath}/tiled-items.html`);
-      await page.waitForFunction('document.activeElement');
       await page.keyboard.press('ArrowRight');
       await page.keyboard.press('ArrowRight');
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-3');
       await page.keyboard.press('ArrowDown');
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-11');
+    });
+
+    it('should consider items in the direction you want to move even if some of that items area is in the opposite direction', async () => {
+      await page.evaluate(() => document.getElementById('item-22').focus());
+      await page.keyboard.press('ArrowRight');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-15');
     });
   });
 
