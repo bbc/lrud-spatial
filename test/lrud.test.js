@@ -498,6 +498,12 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowRight');
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-15');
     });
+
+    it('should not consider items in the direction you want to move if it is behind the exit midpoint ', async () => {
+      await page.evaluate(() => document.getElementById('item-8').focus());
+      await page.keyboard.press('ArrowRight');
+      expect(await page.evaluate(() => document.activeElement.id)).not.toEqual('item-15');
+    });
   });
 
   describe('Scope', () => {
