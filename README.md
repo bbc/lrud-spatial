@@ -44,7 +44,7 @@ Any potential candidate with the `lrud-ignore` class, or inside any parent with 
 
 By default, LRUD will measure to all candidates that are in the direction to move. It will also include candidates that overlap the current focus by up to 30%, allowing for e.g. a 'right' movement to include something that is above the current focus, but has half of it's size expanding to the right.
 
-This threshold can be adjusted on a per-element basis with the `data-lrud-allowed-overlap` attribute, as a float from 0.0 to 1.0. An overlap of 0.0 will make a candidate only be considered if it is located _entirely_ in the direction of movement.
+This threshold can be adjusted on a per-element basis with the `data-lrud-overlap-threshold` attribute, as a float from 0.0 to 1.0. An overlap of 0.0 will make a candidate only be considered if it is located _entirely_ in the direction of movement.
 
 ## Containers
 

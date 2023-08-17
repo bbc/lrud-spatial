@@ -520,12 +520,12 @@ describe('LRUD spatial', () => {
     });
 
     it('should consider items with a customised overlap value', async () => {
-      await page.evaluate(() => document.getElementById('item-44').setAttribute('data-lrud-allowed-overlap', 0.6));
+      await page.evaluate(() => document.getElementById('item-44').setAttribute('data-lrud-overlap-threshold', 0.6));
       await page.evaluate(() => document.getElementById('item-29').focus());
       await page.keyboard.press('ArrowRight');
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-44');
 
-      await page.evaluate(() => document.getElementById('item-15').setAttribute('data-lrud-allowed-overlap', 0));
+      await page.evaluate(() => document.getElementById('item-15').setAttribute('data-lrud-overlap-threshold', 0));
       await page.evaluate(() => document.getElementById('item-22').focus());
       await page.keyboard.press('ArrowRight');
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-8');
