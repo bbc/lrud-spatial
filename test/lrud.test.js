@@ -492,11 +492,43 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowDown');
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-11');
     });
+  });
 
-    it('should consider items in the direction you want to move even if some of that items area is in the opposite direction', async () => {
+  describe('Candidate overlap', () => {
+    beforeEach(async () => {
+      await page.goto(`${testPath}/tiled-items.html`);
+      await page.waitForFunction('document.activeElement');
+    });
+
+    it('should consider items in the direction you want to move if they are fully in that direction with no overlap', async () => {
+      await page.evaluate(() => document.getElementById('item-36').focus());
+      await page.keyboard.press('ArrowRight');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-44');
+    });
+
+    it('should consider items in the direction you want to move if they overlap by up to 30%', async () => {
       await page.evaluate(() => document.getElementById('item-22').focus());
       await page.keyboard.press('ArrowRight');
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-15');
+    });
+
+    it('should not consider items in the direction you want to move if they overlap by more than 30%', async () => {
+      await page.evaluate(() => document.getElementById('item-29').focus());
+      await page.keyboard.press('ArrowRight');
+      expect(await page.evaluate(() => document.activeElement.id)).not.toEqual('item-15');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-8');
+    });
+
+    it('should consider items with a customised overlap value', async () => {
+      await page.evaluate(() => document.getElementById('item-44').setAttribute('data-lrud-overlap-threshold', 0.6));
+      await page.evaluate(() => document.getElementById('item-29').focus());
+      await page.keyboard.press('ArrowRight');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-44');
+
+      await page.evaluate(() => document.getElementById('item-15').setAttribute('data-lrud-overlap-threshold', 0));
+      await page.evaluate(() => document.getElementById('item-22').focus());
+      await page.keyboard.press('ArrowRight');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-8');
     });
   });
 
