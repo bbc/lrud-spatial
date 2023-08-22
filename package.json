@@ -11,7 +11,7 @@
     "build": "rm -f lib/lrud.min.js && babel lib --out-file lib/lrud.min.js",
     "server": "node ./test/server.js",
     "lint": "eslint .",
-    "prepare": "husky install",
+    "prepare": "husky install || exit 0",
     "preversion": "npm test",
     "postversion": "git push origin master --tags --no-verify"
   },
