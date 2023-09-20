@@ -123,4 +123,4 @@ select a layout.
 
 ## Contact
 
-[TVOpenSource@bbc.co.uk](mailto:TVOpenSource@bbc.co.uk)
+[TVOpenSource@bbc.co.uk](mailto:TVOpenSource@bbc.co.uk) - we aim to respond to emails within a week.
