@@ -7,7 +7,7 @@ Move focus around a HTML document using Left, Right, Up, Down keys.
 ## API
 
 <pre>
-getNextFocus(<i>currentFocus</i>, <i>keyCode</i>, <i>[scope]</i>)
+getNextFocus(<i>currentFocus</i>, <i>keyOrKeyCode</i>, <i>[scope]</i>)
 </pre>
 
 ### Parameters
@@ -16,8 +16,9 @@ getNextFocus(<i>currentFocus</i>, <i>keyCode</i>, <i>[scope]</i>)
   [`HTMLElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement)
   that you want LRUD spatial to consider as the element you are navigating _from_.
   In simple applications, this can just be a reference to `document.activeElement`.
-- `keyCode` should be a
-  [`keyCode`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode)
+- `keyOrKeyCode` should be a
+  [`key`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key) string or
+  a [`keyCode`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode)
   decimal representing the directional key pressed.
 - `scope` is an optional `HTMLElement` that you only want to look for focusable candidates inside of. Defaults to the whole page if not provided.
 
