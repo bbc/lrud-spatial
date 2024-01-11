@@ -1,6 +1,6 @@
 {
   "name": "@bbc/tv-lrud-spatial",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Spatial navigation library",
   "main": "lib/lrud.min.js",
   "directories": {
