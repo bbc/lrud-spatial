@@ -667,5 +667,16 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowUp');
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-1');
     });
+
+    it('should still remember last active child if focus is manually moved from a container', async () => {
+      await page.evaluate(() => document.getElementById('item-1').focus());
+      await page.keyboard.press('ArrowDown');
+      await page.keyboard.press('ArrowRight');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-6');
+      await page.evaluate(() => document.getElementById('item-8').focus());
+
+      await page.keyboard.press('ArrowUp');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-6');
+    });
   });
 });
