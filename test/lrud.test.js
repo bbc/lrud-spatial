@@ -678,5 +678,25 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowUp');
       expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-6');
     });
+
+    it('should only store the last active child ID if the child is not inside another container', async () => {
+      const getParentContainerDataFocus = (id) => page.evaluate((id) => document.getElementById(id).parentElement.getAttribute('data-focus'), id);
+      await page.goto(`${testPath}/4c-v-5f-nested.html`);
+      await page.evaluate(() => document.getElementById('item-1').focus());
+      await page.keyboard.press('ArrowDown');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-2');
+      expect(await getParentContainerDataFocus('item-1')).toEqual('item-1');
+      expect(await getParentContainerDataFocus('item-2')).toEqual('item-2');
+      await page.keyboard.press('ArrowDown');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-3');
+      expect(await getParentContainerDataFocus('item-1')).toEqual('item-3');
+      expect(await getParentContainerDataFocus('item-2')).toEqual('item-2');
+      await page.keyboard.press('ArrowUp');
+      expect(await getParentContainerDataFocus('item-1')).toEqual('item-3');
+      expect(await getParentContainerDataFocus('item-2')).toEqual('item-2');
+      await page.keyboard.press('ArrowUp');
+      expect(await getParentContainerDataFocus('item-1')).toEqual('item-1');
+      expect(await getParentContainerDataFocus('item-2')).toEqual('item-2');
+    });
   });
 });
