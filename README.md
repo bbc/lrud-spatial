@@ -47,6 +47,8 @@ By default, LRUD will measure to all candidates that are in the direction to mov
 
 This threshold can be adjusted on a per-element basis with the `data-lrud-overlap-threshold` attribute, as a float from 0.0 to 1.0. An overlap of 0.0 will make a candidate only be considered if it is located _entirely_ in the direction of movement.
 
+Please also note that LRUD does not consider the Z Axis, which can cause surprising results with elements that are overlapped in this way, including in the case of full screen overlays on existing UIs. The above attribute can help alleviate this issue.
+
 ## Containers
 
 Focusables can be wrapped in containers. Containers can keep track of the last
