@@ -8,6 +8,8 @@ describe('LRUD spatial', () => {
   let page;
   let context;
 
+  const getParentContainerDataFocus = (id) => page.evaluate((id) => document.getElementById(id).parentElement.getAttribute('data-focus'), id);
+
   beforeAll(async () => {
     try {
       await server.listen();
@@ -688,7 +690,6 @@ describe('LRUD spatial', () => {
     });
 
     it('should only store the last active child ID if the child is not inside another container', async () => {
-      const getParentContainerDataFocus = (id) => page.evaluate((id) => document.getElementById(id).parentElement.getAttribute('data-focus'), id);
       await page.goto(`${testPath}/4c-v-5f-nested.html`);
       await page.evaluate(() => document.getElementById('item-1').focus());
       await page.keyboard.press('ArrowDown');
@@ -705,6 +706,15 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowUp');
       expect(await getParentContainerDataFocus('item-1')).toEqual('item-1');
       expect(await getParentContainerDataFocus('item-2')).toEqual('item-2');
+    });
+
+    it('does not update the new active child ID if the exit was blocked', async () => {
+      await page.goto(`${testPath}/3c-h-6f-blocked-exit.html`);
+      await page.evaluate(() => document.getElementById('item-2').focus());
+      await page.keyboard.press('ArrowDown');
+      expect(await getParentContainerDataFocus('item-2')).toEqual('item-2');
+      expect(await page.evaluate(() => document.activeElement.id)).toEqual('item-2');
+      expect(await getParentContainerDataFocus('item-3')).toEqual(null);
     });
   });
 });
