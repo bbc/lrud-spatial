@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "rm -f lib/lrud.min.js && babel lib --out-file lib/lrud.min.js",
+    "build": "rm -f lib/lrud.min.js && babel lib --source-maps true --out-file lib/lrud.min.js",
     "server": "node ./test/server.js",
     "lint": "eslint .",
     "prepare": "husky install || exit 0",
@@ -35,8 +35,8 @@
     "puppeteer": "^19.7.2"
   },
   "dependencies": {
-    "@babel/cli": "^7.16.8",
-    "@babel/core": "^7.16.12",
-    "@babel/preset-env": "^7.12.1"
+    "@babel/cli": "^7.23.9",
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9"
   }
 }
