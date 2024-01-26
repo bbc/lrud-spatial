@@ -122,8 +122,6 @@ To investigate why a test is failing, or just to hack on some changes... run
 `npm run server`. Then go to [http://localhost:3005](http://localhost:3005) and
 select a layout.
 
-> Remember to terminate this process before running the tests again!
-
 ## Contact
 
 [TVOpenSource@bbc.co.uk](mailto:TVOpenSource@bbc.co.uk) - we aim to respond to emails within a week.
