@@ -9,7 +9,13 @@ describe('LRUD spatial', () => {
   let context;
 
   beforeAll(async () => {
-    await server.listen();
+    try {
+      await server.listen();
+    } catch (ex) {
+      if (ex.code !== 'EADDRINUSE') {
+        throw ex;
+      }
+    }
     browser = await puppeteer.launch({
       defaultViewport: {width: 1280, height: 800}
     });
@@ -21,13 +27,15 @@ describe('LRUD spatial', () => {
   });
 
   afterEach(async () => {
-    await page.close();
+    await page?.close();
   });
 
   afterAll(async () => {
-    await context.close();
-    await browser.close();
-    await server.close();
+    await context?.close();
+    await browser?.close();
+    try {
+      await server.close();
+    } catch { /* empty */ }
   });
 
   describe('Initialising', () => {
