@@ -5,6 +5,7 @@
 
 body {
     color: #333;
+    width: 1200px;
     padding:15px;
     background-color: aliceblue;
     overscroll-behavior: none;
