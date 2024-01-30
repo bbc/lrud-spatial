@@ -23,6 +23,16 @@ section > section, .lrud-container > .lrud-container {
     margin: 10px;
 }
 
+section > section > section, .lrud-container > .lrud-container > .lrud-container {
+    background-color: #5b7084;
+    margin: 10px;
+}
+
+section > section > section > section, .lrud-container > .lrud-container > .lrud-container > .lrud-container {
+    background-color: #879db2;
+    margin: 10px;
+}
+
 a {
     text-decoration: none;
     display:inline-block;
