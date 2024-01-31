@@ -661,6 +661,23 @@ describe('LRUD spatial', () => {
 
       expect(result).toEqual('item-7');
     });
+
+    it('should remember the last active child of a focusable container', async () => {
+      await page.goto(`${testPath}/4c-v-5f-nested.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.evaluate(() => document.getElementById('section-2').setAttribute('data-lrud-consider-container-distance', true));
+      await page.evaluate(() => document.getElementById('item-4').focus());
+      await page.keyboard.press('ArrowRight');
+      let result = await page.evaluate(() => document.activeElement.id);
+      expect(result).toEqual('item-5');
+      await page.evaluate(() => document.getElementById('item-7').focus());
+      await page.keyboard.press('ArrowUp');
+      result = await page.evaluate(() => document.activeElement.id);
+      expect(result).toEqual('item-5');
+      await page.evaluate(() => document.getElementById('item-4').focus());
+      await page.keyboard.press('ArrowUp');
+      expect(await page.evaluate(() => document.getElementById('section-2').getAttribute('data-focus'))).toBe('item-4');
+    });
   });
 
   describe('Last active child', () => {
