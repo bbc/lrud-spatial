@@ -1,6 +1,4 @@
 node_modules/
-*.min.js
-*.map
 credentials.json
 
 # Logs
