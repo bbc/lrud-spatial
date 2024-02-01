@@ -653,20 +653,36 @@ describe('LRUD spatial', () => {
     });
 
     it('should remember the last active child of a focusable container', async () => {
-      await page.goto(`${testPath}/4c-v-5f-nested.html`);
+      await page.goto(`${testPath}/nested-focusable-containers.html`);
       await page.waitForFunction('document.activeElement');
-      await page.evaluate(() => document.getElementById('section-2').setAttribute('data-lrud-consider-container-distance', true));
-      await page.evaluate(() => document.getElementById('item-4').focus());
+      await page.evaluate(() => document.getElementById('item-3').focus());
       await page.keyboard.press('ArrowRight');
       let result = await page.evaluate(() => document.activeElement.id);
-      expect(result).toEqual('item-5');
-      await page.evaluate(() => document.getElementById('item-7').focus());
+      expect(result).toEqual('item-4');
+      await page.evaluate(() => document.getElementById('item-9').focus());
       await page.keyboard.press('ArrowUp');
       result = await page.evaluate(() => document.activeElement.id);
-      expect(result).toEqual('item-5');
-      await page.evaluate(() => document.getElementById('item-4').focus());
+      expect(result).toEqual('item-4');
+      await page.evaluate(() => document.getElementById('item-5').focus());
       await page.keyboard.press('ArrowUp');
-      expect(await page.evaluate(() => document.getElementById('section-2').getAttribute('data-focus'))).toBe('item-4');
+      result = await page.evaluate(() => document.activeElement.id);
+      expect(result).toEqual('item-1');
+      await page.keyboard.press('ArrowDown');
+      result = await page.evaluate(() => document.activeElement.id);
+      expect(result).toEqual('item-5');
+    });
+
+    it('should prioritise focusable containers that are the same distance away as a regular focusable', async () => {
+      await page.goto(`${testPath}/nested-focusable-containers.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.evaluate(() => document.getElementById('item-11').focus());
+      await page.keyboard.press('ArrowDown');
+      let result = await page.evaluate(() => document.activeElement.id);
+      expect(result).toEqual('item-12');
+      await page.evaluate(() => document.getElementById('item-9').focus());
+      await page.keyboard.press('ArrowDown');
+      result = await page.evaluate(() => document.activeElement.id);
+      expect(result).toEqual('item-12');
     });
   });
 
