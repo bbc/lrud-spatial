@@ -422,6 +422,16 @@ describe('LRUD spatial', () => {
 
       expect(result).toEqual('item-5');
     });
+
+    it('should move to the second best candidate if first was blocked', async () => {
+      await page.goto(`${testPath}/3c-h-6f-blocked-exit.html`);
+      await page.evaluate(() => document.getElementById('item-6').focus());
+      await page.keyboard.press('ArrowUp');
+
+      const result = await page.evaluate(() => document.activeElement.id);
+
+      expect(result).toEqual('item-1');
+    });
   });
 
   describe('Page with nested containers', () => {

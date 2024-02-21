@@ -5,6 +5,7 @@
 
 body {
     color: #333;
+    width: 1200px;
     padding:15px;
     background-color: aliceblue;
     overscroll-behavior: none;
@@ -18,6 +19,16 @@ section, .lrud-container {
 }
 
 section > section, .lrud-container > .lrud-container {
+    background-color: #879db2;
+    margin: 10px;
+}
+
+section > section > section, .lrud-container > .lrud-container > .lrud-container {
+    background-color: #5b7084;
+    margin: 10px;
+}
+
+section > section > section > section, .lrud-container > .lrud-container > .lrud-container > .lrud-container {
     background-color: #879db2;
     margin: 10px;
 }
