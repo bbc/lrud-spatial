@@ -64,8 +64,6 @@ used instead.
 At this time, containers are defined as matching the CSS selectors:
 `nav`, `section` or `.lrud-container`.
 
-Adding attribute `data-lrud-consider-container-distance` on a container will make LRUD also measure distances to that container's boundary, as well as its children. If the container is the closest of all the possible candidates assessed, LRUD will return one of its children - even if they are not necessarily the spatially closest focusable. The above container focus logic will still be used, so if the container has a previous focus state that will be the returned element. This allows for layouts where moving between containers is the desired behaviour, but their individual elements may not be in the correct positions for that. By default LRUD will only consider focusables when measuring, and ignores container positions.
-
 ### Block exits
 
 In some instances, it is desirable to prevent lrud-spatial from selecting another
@@ -78,6 +76,15 @@ E.g.
 ```html
 <div class="lrud-container" data-block-exit="up down">...</div>
 ```
+
+### Focusable Containers
+
+By default, LRUD only measures the distances to focusables and does not consider where their container boundaries are. Adding the attribute `data-lrud-consider-container-distance` to a container will include it in the distance calculations, as well as its children.
+
+If the container is the closest out of all the possible focusables assessed, LRUD will return one of its children - even if they are not necessarily the spatially closest focusable.
+
+The above container focus logic will still be used, and moving into a focusable container will move to its last focused child if there was one, at any level of container depth inside it.
+
 
 ## How does it work?
 
