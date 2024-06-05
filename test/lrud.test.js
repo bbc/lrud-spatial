@@ -266,7 +266,7 @@ describe('LRUD spatial', () => {
      * width, height, and coordinates set to 0. These should not be considered focusable candidates.
      *
      * Elements with the `lrud-ignore` class, or inside a parent with the `lrud-ignore` class, should
-     * be not be considered focusable candidates
+     * not be considered focusable candidates
      *
      */
     it('should ignore hidden items as possible candidates and move past them', async () => {
@@ -288,6 +288,40 @@ describe('LRUD spatial', () => {
       const result = await page.evaluate(() => document.activeElement.id);
 
       expect(result).toEqual('item-9');
+    });
+  });
+
+  describe('Unreachable foucsable elements', () => {
+    /*
+     * Elements with a tabindex of -1 should not be considered focusable candidates.
+     * Elements inside a parent with tabindex -1 should be considered focusable candidates.
+     *
+     */
+    it('should ignore tabindex -1 items as possible candidates and move past them', async () => {
+      await page.goto(`${testPath}/unreachable.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('ArrowRight');
+
+      const result = await page.evaluate(() => document.activeElement.id);
+
+      expect(result).toEqual('item-4');
+    });
+
+    it('should not ignore visible items inside tabindex -1 containers', async () => {
+      await page.goto(`${testPath}/unreachable.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.keyboard.press('ArrowDown');
+
+      const result = await page.evaluate(() => document.activeElement.id);
+
+      expect(result).toEqual('item-6');
+
+      await page.keyboard.press('ArrowDown');
+
+      const nextResult = await page.evaluate(() => document.activeElement.id);
+
+      expect(nextResult).toEqual('item-7');
     });
   });
 

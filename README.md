@@ -32,7 +32,7 @@ navigate _to_.
 LRUD spatial defines focusable elements as those which match any of the
 following CSS selectors:
 
-- `[tabindex]`
+- `[tabindex]` (for tabindex >= 0)
 - `a`
 - `button`
 - `input`
@@ -40,6 +40,8 @@ following CSS selectors:
 ### Ignoring Focusables
 
 Any potential candidate with the `lrud-ignore` class, or inside any parent with the `lrud-ignore` class, will not be considered focusable and will be skipped over. By default LRUD will not ignore candidates that have `opacity: 0` or have a parent with `opacity: 0`, so this class can be used for that.
+
+Focusables with a `tabindex="-1"` attribute will be skipped over, however any focusable inside any parent with `tabindex="-1"` will still be considered focusable.
 
 ### Focusable Overlap
 
