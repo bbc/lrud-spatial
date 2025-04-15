@@ -70,6 +70,11 @@ section.panel, div.panel {
     display: none;
 }
 
+[aria-disabled="true"] {
+    background: repeating-linear-gradient(135deg, #e2feff55, #d3d3d355 10px, #94baffbb 10px, #d3d3d3bb 20px);
+    font-style: italic;
+}
+
 .lrud-ignore {
     background: repeating-linear-gradient(45deg, #d3d3d355, #d3d3d355 10px, #d3d3d3bb 10px, #d3d3d3bb 20px);
     font-style: italic;
