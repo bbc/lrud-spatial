@@ -43,7 +43,7 @@ Any potential candidate with the `lrud-ignore` class, or inside any parent with 
 
 Focusables with a `tabindex="-1"` attribute will be skipped over, however any focusable inside any parent with `tabindex="-1"` will still be considered focusable.
 
-Potential candidates with aria-disabled='true' will not be considered focusable.
+Potential candidates with `disabled` or `aria-disabled="true"` attributes will not be considered focusable.
 
 ### Focusable Overlap
 
