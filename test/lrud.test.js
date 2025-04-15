@@ -325,6 +325,19 @@ describe('LRUD spatial', () => {
     });
   });
 
+  describe('disabled elements are not focusable', () => {
+    it('aria-disabled="true"', async () => {
+      await page.goto(`${testPath}/disabled.html`);
+      await page.waitForFunction('document.activeElement');
+      await page.keyboard.press('ArrowDown');
+      await page.keyboard.press('ArrowRight');
+
+      const result = await page.evaluate(() => document.activeElement.id);
+
+      expect(result).toEqual('item-7');
+    });
+  });
+
   describe('Page with 11 candidates, with varying sizes', () => {
     it('should focus on candidate 6 when right, down is pressed', async () => {
       await page.goto(`${testPath}/0c-v-11f-size.html`);
