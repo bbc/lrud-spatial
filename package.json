@@ -3,6 +3,7 @@
   "version": "0.0.12",
   "description": "Spatial navigation library",
   "main": "lib/lrud.min.js",
+  "types": "lib/types.d.ts",
   "directories": {
     "doc": "docs"
   },

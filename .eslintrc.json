@@ -14,7 +14,7 @@
   "extends": [
     "eslint:recommended"
   ],
-  "ignorePatterns": ["*.min.js", "*.config.js"],
+  "ignorePatterns": ["*.min.js", "*.config.js", "*.d.ts"],
   "overrides": [
     {
       "files": ["*.js", "*.ts", "*.tsx"],
