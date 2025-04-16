@@ -19,6 +19,7 @@ describe('LRUD spatial', () => {
       }
     }
     browser = await puppeteer.launch({
+      args: ['--no-sandbox'],
       defaultViewport: {width: 1280, height: 800}
     });
     context = await browser.createIncognitoBrowserContext();
