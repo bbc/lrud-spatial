@@ -31,7 +31,7 @@ jobs:
         run: npm ci
 
       - name: Install chromium
-        run: PUPPETEER_SKIP_DOWNLOAD= node node_modules/puppeteer/install.js
+        run: sudo apt-get install chromium-browser
 
       - name: Lint source
         run: npm run lint
