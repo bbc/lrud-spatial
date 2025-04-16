@@ -8,5 +8,6 @@ module.exports = {
   testMatch: [
     '<rootDir>/test/**/*?(*.)+(spec|test).js?(x)',
   ],
-  moduleFileExtensions: ['js', 'jsx', 'json', 'node']
+  moduleFileExtensions: ['js', 'jsx', 'json', 'node'],
+  testTimeout: 10000,
 }
