@@ -43,6 +43,8 @@ Any potential candidate with the `lrud-ignore` class, or inside any parent with 
 
 Focusables with a `tabindex="-1"` attribute will be skipped over, however any focusable inside any parent with `tabindex="-1"` will still be considered focusable.
 
+Potential candidates with `disabled` or `aria-disabled="true"` attributes will not be considered focusable.
+
 ### Focusable Overlap
 
 By default, LRUD will measure to all candidates that are in the direction to move. It will also include candidates that overlap the current focus by up to 30%, allowing for e.g. a 'right' movement to include something that is above the current focus, but has half of it's size expanding to the right.
