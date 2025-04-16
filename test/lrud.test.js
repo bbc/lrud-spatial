@@ -326,7 +326,7 @@ describe('LRUD spatial', () => {
     });
   });
 
-  describe('disabled elements are not focusable', () => {
+  describe('disabled elements are not focusable but aria-disabled=true are', () => {
     it('disabled', async () => {
       await page.goto(`${testPath}/disabled.html`);
       await page.waitForFunction('document.activeElement');
@@ -345,7 +345,7 @@ describe('LRUD spatial', () => {
 
       const result = await page.evaluate(() => document.activeElement.id);
 
-      expect(result).toEqual('item-7');
+      expect(result).toEqual('item-6');
     });
   });
 
