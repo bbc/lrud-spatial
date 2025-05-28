@@ -760,7 +760,7 @@ describe('LRUD spatial', () => {
       await page.keyboard.press('ArrowDown');
       let result = await page.evaluate(() => document.activeElement.id);
       expect(result).toEqual('item-12');
-      await page.evaluate(() => document.getElementById('item-11').focus());
+      await page.evaluate(() => document.getElementById('item-9').focus());
       await page.keyboard.press('ArrowDown');
       result = await page.evaluate(() => document.activeElement.id);
       expect(result).toEqual('item-12');
