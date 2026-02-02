@@ -5,6 +5,10 @@ on:
     tags:
       - "*.*.*"
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -12,26 +16,28 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 24
           registry-url: https://registry.npmjs.org/
 
+      - name: Update npm
+        run: npm install -g npm@latest
+
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Build package
         run: npm run build
+
+      - name: Install puppeteer browsers
+        run: npx puppeteer browsers install
 
       - name: Run tests
         run: npm test
 
       - name: Publish to NPM
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        run: |
-          npm config set '//registry.npmjs.org/:_authToken' "${NODE_AUTH_TOKEN}"
-          npm publish --access public --ignore-scripts
+        run: npm publish --access public --ignore-scripts
