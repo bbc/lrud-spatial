@@ -22,7 +22,7 @@ describe('LRUD spatial', () => {
       args: ['--no-sandbox'],
       defaultViewport: {width: 1280, height: 800}
     });
-    context = await browser.createIncognitoBrowserContext();
+    context = await browser.createBrowserContext();
   });
 
   beforeEach(async () => {
